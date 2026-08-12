@@ -44,6 +44,8 @@ repo sync
 # clone this tree to:
 #   device/infinix/X6886
 
+export LC_ALL=C
+export ALLOW_MISSING_DEPENDENCIES=true
 source build/envsetup.sh
 lunch twrp_X6886-ap2a-eng
 mka vendorbootimage
