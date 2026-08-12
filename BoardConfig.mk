@@ -147,7 +147,9 @@ TARGET_INIT_VENDOR_LIB := libinit_X6886
 TARGET_RECOVERY_DEVICE_MODULES := libinit_X6886
 
 # TWRP Configurations
-TW_FRAMERATE := 144
+# 120Hz smooth UI (panel runs at native refresh via dsi panel module)
+TW_FRAMERATE := 120
+TW_NO_SCREEN_BLANK := true
 TW_STATUS_ICONS_ALIGN := center
 TW_THEME := portrait_hdpi
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/backlight/brightness"
