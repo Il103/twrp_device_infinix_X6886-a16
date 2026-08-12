@@ -1,0 +1,18 @@
+# X6886 device-specific recovery init
+
+on fs
+    # MTK display/panel modules are loaded by the kernel from vendor_boot
+    # via TW_LOAD_VENDOR_BOOT_MODULES; nothing to insmod here.
+
+on boot
+    # backlight
+    chown system system /sys/class/backlight/backlight/brightness
+    chmod 0666 /sys/class/backlight/backlight/brightness
+
+    # RGB LED
+    chown system system /sys/class/leds/red/brightness
+    chmod 0666 /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/green/brightness
+    chmod 0666 /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/blue/brightness
+    chmod 0666 /sys/class/leds/blue/brightness

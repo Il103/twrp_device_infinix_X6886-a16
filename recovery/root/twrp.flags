@@ -1,0 +1,6 @@
+# TWRP flags for Infinix X6886
+# Android 16 / FBE / metadata encryption / fscrypt v2
+# KeyMint v3 (android.hardware.security.keymint@3.0-service.trustonic)
+
+# Allow formatdata to run from recovery
+allow-factory-reset=true

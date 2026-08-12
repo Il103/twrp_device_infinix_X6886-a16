@@ -1,0 +1,11 @@
+# MTK vibrator HAL in recovery
+
+service vendor.vibrator-2-1 /vendor/bin/hw/android.hardware.vibrator-service.mediatek
+    class hal
+    user system
+    group system
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:servicemanager.ready=true
+    start vendor.vibrator-2-1
