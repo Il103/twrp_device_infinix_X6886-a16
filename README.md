@@ -57,6 +57,19 @@ out/target/product/X6886/vendor_boot.img
 
 ---
 
+> **Note:** The minimal TWRP manifest does not generate the `-ndk_platform`
+> variant of the AIDL NDK libs. Apply the official fix before the first build
+> (run from the AOSP tree root):
+>
+> ```bash
+> bash device/infinix/X6886/scripts/fix-ndk-platform.sh
+> ```
+>
+> This renames `android.security.apc-ndk_platform` etc. to the plain `-ndk`
+> names in `bootable/recovery/{libtar,Android}.mk`.
+
+---
+
 ## Flash
 
 ```bash
