@@ -56,13 +56,25 @@ ENABLE_SCHEDBOOST := true
 # ==========================================
 TARGET_BOOTLOADER_BOARD_NAME := mt6789
 TARGET_NO_BOOTLOADER := true
-
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_NO_KERNEL := true
 BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
+
+# ==========================================
+# Build Hack
+# ==========================================
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+BUILD_BROKEN_NINJA_USES_ENV_VARS += RTIC_MPGEN
+BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
+
+# ==========================================
+# Building with minimal manifest
+# ==========================================
+ALLOW_MISSING_DEPENDENCIES := true
 
 # ==========================================
 # Vendor Boot (Header v4)
@@ -249,5 +261,3 @@ ifeq ($(OFOX_BUILD), true)
     OFOX_ALLOW_FRONT_CAMERA_ON_START := true
     FOX_DELETE_AROMAFM := true
     FOX_REMOVE_AAPT := true
-
-endif
