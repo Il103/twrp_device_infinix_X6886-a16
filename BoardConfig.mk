@@ -16,7 +16,9 @@
 
 DEVICE_PATH := device/infinix/X6886
 
-# Architecture
+# ==========================================
+# Target Architecture (ARM64)
+# ==========================================
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
@@ -35,49 +37,37 @@ TARGET_IS_64_BIT := true
 TARGET_USES_64_BIT_BINDER := true
 TARGET_BOARD_SUFFIX := _64
 
-# Board
+# ==========================================
+# Board Info & Platform
+# ==========================================
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
+TARGET_BOARD_PLATFORM := mt6789
+BOARD_USES_MTK_HARDWARE := true
+TARGET_OTA_ASSERT_DEVICE := X6886
 
-# Power
+# ==========================================
+# Power & CPU
+# ==========================================
 ENABLE_CPUSETS := true
 ENABLE_SCHEDBOOST := true
 
-# Assertation
-TARGET_OTA_ASSERT_DEVICE := X6886
-
-# Bootloader
+# ==========================================
+# Bootloader & Kernel
+# ==========================================
 TARGET_BOOTLOADER_BOARD_NAME := mt6789
 TARGET_NO_BOOTLOADER := true
 
-# Build Hack
-BUILD_BROKEN_DUP_RULES := true
-BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-BUILD_BROKEN_NINJA_USES_ENV_VARS += RTIC_MPGEN
-BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
-
-# Building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
-
-# Crypto
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_CRYPTO_FBE := true
-BOARD_USES_METADATA_PARTITION := true
-TW_INCLUDE_FBE_METADATA_DECRYPT := true
-TW_USE_FSCRYPT_POLICY := 2
-PLATFORM_VERSION := 99.87.36
-PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
-PLATFORM_SECURITY_PATCH := 2099-12-31
-BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
-VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
-
-# Vendor Boot
 TARGET_KERNEL_ARCH := arm64
-BOARD_RAMDISK_USE_LZ4 := true
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_NO_KERNEL := true
 BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
+
+# ==========================================
+# Vendor Boot (Header v4)
+# ==========================================
+BOARD_RAMDISK_USE_LZ4 := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
 BOARD_KERNEL_BASE := 0x3FFF8000
@@ -90,6 +80,7 @@ BOARD_DTB_SIZE := 183850
 BOARD_DTB_OFFSET := 0x07C88000
 BOARD_HEADER_SIZE := 2128
 BOARD_VENDOR_CMDLINE := "bootopt=64S3,32N2,64N2 androidboot.selinux=permissive"
+
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_MKBOOTIMG_ARGS += --vendor_cmdline $(BOARD_VENDOR_CMDLINE)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_PAGE_SIZE) --board ""
@@ -99,55 +90,77 @@ BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 
-# Partitions
+# ==========================================
+# Dynamic Partitions (VAB) & Filesystems
+# ==========================================
 BOARD_FLASH_BLOCK_SIZE := 262144
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_SUPER_PARTITION_SIZE := 9126805504
 BOARD_SUPER_PARTITION_GROUPS := main
 BOARD_MAIN_PARTITION_LIST := system system_ext product vendor vendor_dlkm odm odm_dlkm system_dlkm tr_region tr_company tr_carrier tr_product tr_preload tr_overlayfs tr_misc
 BOARD_MAIN_SIZE := 9017751552 # (BOARD_SUPER_PARTITION_SIZE - 100000000) headroom
+
 BOARD_PARTITION_LIST := $(call to-upper, $(BOARD_MAIN_PARTITION_LIST))
 $(foreach p, $(BOARD_PARTITION_LIST), $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := erofs))
 $(foreach p, $(BOARD_PARTITION_LIST), $(eval TARGET_COPY_OUT_$(p) := $(call to-lower, $(p))))
+
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 BOARD_USES_VENDOR_DLKMIMAGE := true
 
-# Hardware
-BOARD_USES_MTK_HARDWARE := true
+# ==========================================
+# FBE Decryption (Crypto)
+# ==========================================
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+BOARD_USES_METADATA_PARTITION := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+TW_USE_FSCRYPT_POLICY := 2
 
-# Platform
-TARGET_BOARD_PLATFORM := mt6789
+# Fixed Platform Version for Decryption Match
+PLATFORM_VERSION := 14
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+PLATFORM_SECURITY_PATCH := 2099-12-31
+BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
-# Properties
+# ==========================================
+# System Properties & Init
+# ==========================================
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+TARGET_INIT_VENDOR_LIB := libinit_X6886
+TARGET_RECOVERY_DEVICE_MODULES := libinit_X6886
 
-# Device Fstab
+# ==========================================
+# Recovery, Display & Build Hacks
+# ==========================================
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
-
-# Resolution (verified from dump: 1080x2400 AMOLED, density 420)
-TARGET_SCREEN_HEIGHT := 2400
-TARGET_SCREEN_WIDTH := 1080
-TARGET_SCREEN_DENSITY := 420
-
-# Recovery
 TARGET_NO_RECOVERY := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_SUPPRESS_SECURE_ERASE := true
-# Pixel format from stock prop.default: ro.minui.pixel_format=BGRA_8888
-TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
-
-# Verified Boot
 BOARD_AVB_ENABLE := true
 
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_X6886
-TARGET_RECOVERY_DEVICE_MODULES := libinit_X6886
+# Resolution (1080x2400 AMOLED, density 420)
+TARGET_SCREEN_HEIGHT := 2400
+TARGET_SCREEN_WIDTH := 1080
+TARGET_SCREEN_DENSITY := 420
+TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 
-# TWRP Configurations
-# 120Hz smooth UI (panel runs at native refresh via dsi panel module)
+# Build Hacks for Dependencies
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+BUILD_BROKEN_NINJA_USES_ENV_VARS += RTIC_MPGEN
+ALLOW_MISSING_DEPENDENCIES := true
+BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
+
+# ==========================================
+# TWRP Specific Configurations
+# ==========================================
+MAINTAINER := B E R U
+TW_DEVICE_VERSION := Infinix_X6886
+
 TW_FRAMERATE := 120
 TW_NO_SCREEN_BLANK := true
 TW_STATUS_ICONS_ALIGN := center
@@ -167,36 +180,74 @@ TW_HAS_NO_DISPLAY_CUTOUT := false
 TW_NO_LEGACY_PROPS := true
 TW_NO_BIND_SYSTEM := true
 TW_BACKUP_EXCLUSIONS := /data/fonts
-TW_DEVICE_VERSION := Infinix_X6886
-MAINTAINER := TWRP_X6886
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 
-# Fastbootd
+# TWRP Features & Tools
 TW_INCLUDE_FASTBOOTD := true
-
-# Debug
-TARGET_USES_LOGD := true
-TWRP_INCLUDE_LOGCAT := true
-TWRP_EVENT_LOGGING := true
-
-# Tools
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_LIBRESETPROP := true
 TW_INCLUDE_LPDUMP := true
 TW_INCLUDE_LPTOOLS := true
-
-# Filesystem Feature
 TW_INCLUDE_NTFS_3G := true
 TARGET_USES_MKE2FS := true
 TW_INCLUDE_FUSE_NTFS := true
 TW_INCLUDE_FUSE_EXFAT := true
 
-# Haptic (MTK vibrator HAL present in A16 dump)
+# Haptics & Battery
 TW_LOAD_VENDOR_MODULES := ""
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-
-# Battery
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone53/temp"
 TW_BATTERY_SYSFS_WAIT_SECONDS := 6
+
+# Debugging
+TARGET_USES_LOGD := true
+TWRP_INCLUDE_LOGCAT := true
+TWRP_EVENT_LOGGING := true
+
+# ==========================================
+# OrangeFox Recovery Configurations
+# ==========================================
+# These flags load ONLY when building OrangeFox
+ifeq ($(OFOX_BUILD), true)
+    
+    OFOX_MAINTAINER := "B E R U"
+    OFOX_DEVICE := "Infinix Hot 60 Pro Plus"
+    
+    # Notch/Cutout Configurations (Adjust if UI overlaps camera)
+    OFOX_STATUSBAR_RIGHT_MARGIN := 40
+    OFOX_STATUSBAR_LEFT_MARGIN := 40
+    
+    # MediaTek specific fixes for OrangeFox
+    FOX_BUGGED_AOSP_ARB_WORKAROUND := true
+    FOX_RECOVERY_BOOT_PATCH_MTK := true
+    
+    # Virtual A/B (VAB) Fixes
+    FOX_VIRTUAL_AB_DEVICE := true
+    FOX_RECOVERY_SYSTEM_PARTITION := "/system"
+    FOX_RECOVERY_VENDOR_PARTITION := "/vendor"
+    FOX_USE_DYNAMIC_PARTITIONS := true
+    
+    # Advanced Security & Decryption (FBE)
+    FOX_USE_DATA_RECOVERY_FOR_SETTINGS := true
+    FOX_ADVANCED_SECURITY := true
+    FOX_R_PROPS_MODULE := true
+    
+    # OrangeFox Tools & Features
+    FOX_ENABLE_APP_MANAGER := true
+    FOX_USE_BASH_SHELL := true
+    FOX_ASH_IS_BASH := true
+    FOX_USE_NANO_EDITOR := true
+    FOX_USE_TAR_BINARY := true
+    FOX_USE_SED_BINARY := true
+    FOX_USE_XZ_UTILS := true
+    FOX_USE_ZSTD_BINARY := true
+    
+    # Auto-generate Flashable ZIP & Minor Fixes
+    FOX_GENERATE_FLASHABLE_ZIP := true
+    OFOX_ALLOW_FRONT_CAMERA_ON_START := true
+    FOX_DELETE_AROMAFM := true
+    FOX_REMOVE_AAPT := true
+
+endif
