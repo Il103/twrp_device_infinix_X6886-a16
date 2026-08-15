@@ -14,9 +14,14 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/twrp_X6886.mk
+PRODUCT_MAKEFILES := \
+    $(LOCAL_DIR)/twrp_X6886.mk \
+    $(LOCAL_DIR)/ofox_X6886.mk
 
 COMMON_LUNCH_CHOICES := \
     twrp_X6886-user \
     twrp_X6886-userdebug \
-    twrp_X6886-eng
+    twrp_X6886-eng \
+    ofox_X6886-user \
+    ofox_X6886-userdebug \
+    ofox_X6886-eng
