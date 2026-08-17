@@ -261,3 +261,13 @@ ifeq ($(OFOX_BUILD), true)
     OFOX_ALLOW_FRONT_CAMERA_ON_START := true
     FOX_DELETE_AROMAFM := true
     FOX_REMOVE_AAPT := true
+
+    # ---- Flashlight (MTK torch sysfs path from dump selinux contexts) ----
+    OF_FLASHLIGHT_ENABLE := 1
+    OF_FL_PATH1 := /sys/devices/virtual/flashlight_core/flashlight/flashlight_torch
+
+    # ---- Boot-critical flags for fox_14.1 (prebuilt kernel + VAB) ----
+    # Avoid "NO KERNEL CONFIG" build error when using a prebuilt kernel
+    OF_FORCE_PREBUILT_KERNEL := 1
+    # Modern devices use AIDL boot control HAL
+    OF_USE_AIDL_BOOT_CONTROL := 1
