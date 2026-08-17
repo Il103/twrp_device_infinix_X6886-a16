@@ -21,7 +21,7 @@ external_storage.casefold.enabled=1
 external_storage.sdcardfs.enabled=0
 
 # API
-ro.vendor.api_level=35
+ro.vendor.api_level=36
 
 # Pixel format (stock prop.default)
 ro.minui.pixel_format=BGRA_8888

@@ -38,7 +38,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # API
-PRODUCT_SHIPPING_API_LEVEL := 34
+PRODUCT_SHIPPING_API_LEVEL := 36
 PRODUCT_TARGET_VNDK_VERSION := 36
 
 # Enable Fuse Passthrough
@@ -124,11 +124,11 @@ PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
 
-# Keymaster (KeyMint v3 - A16)
+# KeyMint (Android 16 / ro.vendor.keymaster_version=7.0, Trustonic)
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1 \
-    android.hardware.keymaster@4.0 \
-    android.hardware.keymaster@3.0
+    android.hardware.security.keymint \
+    android.hardware.security.secureclock \
+    android.hardware.security.sharedsecret
 
 # Mtk plpath utils
 PRODUCT_PACKAGES += \
