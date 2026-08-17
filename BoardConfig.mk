@@ -177,7 +177,7 @@ TW_FRAMERATE := 120
 TW_NO_SCREEN_BLANK := true
 TW_STATUS_ICONS_ALIGN := center
 TW_THEME := portrait_hdpi
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/backlight/brightness"
+TW_BRIGHTNESS_PATH := /sys/class/backlight/backlight/brightness
 TW_DEFAULT_BRIGHTNESS := 200
 TW_MAX_BRIGHTNESS := 2047
 TWRP_NEW_THEME := true
@@ -210,7 +210,7 @@ TW_INCLUDE_FUSE_EXFAT := true
 # Haptics & Battery
 TW_LOAD_VENDOR_MODULES := ""
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone53/temp"
+TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone53/temp
 TW_BATTERY_SYSFS_WAIT_SECONDS := 6
 
 # Debugging
