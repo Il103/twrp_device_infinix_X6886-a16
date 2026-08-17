@@ -271,3 +271,5 @@ ifeq ($(OFOX_BUILD), true)
     OF_FORCE_PREBUILT_KERNEL := 1
     # Modern devices use AIDL boot control HAL
     OF_USE_AIDL_BOOT_CONTROL := 1
+
+endif
