@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # vendorsetup.sh - Infinix HOT 60 Pro+ (X6886) - mt6789
-# Maintainer : B E R U | Fox 14.1 | Android 16
+# Maintainer : B E R U | Fox 12.1 / 14.1 | Android 16
 #
 
 FDEVICE="X6886"
@@ -12,6 +12,12 @@ local chkdev=$(echo "$BASH_SOURCE" | grep -w $FDEVICE)
    else chkdev=$(set | grep BASH_ARGV | grep -w $FDEVICE); [ -n "$chkdev" ] && FOX_BUILD_DEVICE="$FDEVICE"; fi
 }
 if [ -z "$1" -a -z "$FOX_BUILD_DEVICE" ]; then fox_get_target_device; fi
+
+# ── Fix for 12.1 missing file - create dummy if not exists ──
+if [ ! -f "build/make/target/product/virtual_ab_ota/compression_with_xor.mk" ]; then
+    mkdir -p build/make/target/product/virtual_ab_ota
+    echo "# dummy for 12.1" > build/make/target/product/virtual_ab_ota/compression_with_xor.mk
+fi
 
 # ── OFOX BUILD ──
 if [ "$1" = "ofox_X6886" -o "$FOX_BUILD_DEVICE" = "X6886" ]; then
@@ -27,13 +33,13 @@ if [ "$1" = "ofox_X6886" -o "$FOX_BUILD_DEVICE" = "X6886" ]; then
  ╚██████╔╝██║  ██║██║  ██║██║ ╚████║╚██████╔╝███████╗██║     ╚██████╔╝██╔╝ ██╗
   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝
               ╔══════════════════════════════════════════╗
-              ║   OrangeFox  •  Fox 14.1  •  Android 16 ║
+              ║   OrangeFox  •  Fox 12.1/14.1  •  Android 16 ║
               ║   HOT 60 Pro+ • mt6789 • vendor_boot v4 ║
               ║   Maintainer : B E R U  •  64MB FIX     ║
               ╚══════════════════════════════════════════╝
 EOF
         echo -e "\e[0m"
-        echo -e "\e[1;38;5;214m [FOX] \e[37mFox 14.1 \e[38;5;208m│\e[37m VAB \e[38;5;208m│\e[37m LZMA+DRASTIC \e[32mREADY\e[0m"
+        echo -e "\e[1;38;5;214m [FOX] \e[37mFox 12.1/14.1 \e[38;5;208m│\e[37m VAB \e[38;5;208m│\e[37m LZMA+DRASTIC \e[32mREADY\e[0m"
         ;;
     esac
 
@@ -72,18 +78,21 @@ if [ "$1" = "twrp_X6886" -o "$FOX_BUILD_DEVICE" = "X6886" ]; then
     ██║   ╚███╔███╔╝██║  ██║██║
     ╚═╝    ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝
               ╔══════════════════════════════════════════╗
-              ║   TWRP 14.1  •  Fox 14.1  •  Android 16  ║
+              ║   TWRP 12.1/14.1  •  Android 16  ║
               ║   HOT 60 Pro+ • mt6789 • vendor_boot v4 ║
               ║   Maintainer : B E R U                  ║
               ╚══════════════════════════════════════════╝
 EOF
         echo -e "\e[0m"
-        echo -e "\e[1;38;5;39m [TWRP] \e[37m14.1 \e[38;5;208m│\e[37m VAB \e[32mREADY\e[0m"
+        echo -e "\e[1;38;5;39m [TWRP] \e[37m12.1/14.1 \e[38;5;208m│\e[37m VAB \e[32mREADY\e[0m"
         ;;
     esac
 fi
 
-add_lunch_combo twrp_X6886-eng
-add_lunch_combo twrp_X6886-userdebug
-add_lunch_combo ofox_X6886-eng
-add_lunch_combo ofox_X6886-userdebug
+# ── Lunch combos - compatible with both ──
+if type add_lunch_combo >/dev/null 2>&1; then
+    add_lunch_combo twrp_X6886-eng 2>/dev/null || true
+    add_lunch_combo twrp_X6886-userdebug 2>/dev/null || true
+    add_lunch_combo ofox_X6886-eng 2>/dev/null || true
+    add_lunch_combo ofox_X6886-userdebug 2>/dev/null || true
+fi
