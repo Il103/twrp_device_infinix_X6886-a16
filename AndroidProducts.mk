@@ -16,7 +16,8 @@
 
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_X6886.mk \
-    $(LOCAL_DIR)/ofox_X6886.mk
+    $(LOCAL_DIR)/ofox_X6886.mk \
+    $(LOCAL_DIR)/omni_X6886.mk
 
 COMMON_LUNCH_CHOICES := \
     twrp_X6886-user \
@@ -24,4 +25,7 @@ COMMON_LUNCH_CHOICES := \
     twrp_X6886-eng \
     ofox_X6886-user \
     ofox_X6886-userdebug \
-    ofox_X6886-eng
+    ofox_X6886-eng \
+    omni_X6886-user \
+    omni_X6886-userdebug \
+    omni_X6886-eng
