@@ -7,7 +7,7 @@
 # Inherit from Infinix-X6886 device
 $(call inherit-product, device/infinix/X6886/device.mk)
 
-# Product Specifics
+# Product Specifics - KEEP
 PRODUCT_NAME := ofox_X6886
 PRODUCT_DEVICE := X6886
 PRODUCT_BRAND := Infinix
