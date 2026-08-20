@@ -247,6 +247,10 @@ ifeq ($(OFOX_BUILD), true)
     OF_FL_PATH1 := /sys/devices/virtual/flashlight_core/flashlight/flashlight_torch
     OF_FORCE_PREBUILT_KERNEL := 1
     OF_USE_AIDL_BOOT_CONTROL := 1
+    OF_PATCH_AVB20 := 1
+    OF_KEEP_DM_VERITY := 1
+    OF_USE_MAGISKBOOT := 1
+    OF_DONT_PATCH_ENCRYPTED_DEVICE := 1
     OF_USE_LZMA_COMPRESSION := 1
     FOX_DRASTIC_SIZE_REDUCTION := 1
     OF_ALLOW_DISABLE_NAVBAR := 0
