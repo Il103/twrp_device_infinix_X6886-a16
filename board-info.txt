@@ -1,2 +1,74 @@
 require board=mt6789
-require version-baseband=301400084
+require version-baseband=TA16122P3
+require version-incremental=301400011
+
+# ==========================================================
+# Infinix HOT 60 Pro+ (X6886) - Baklava - Hardware Components
+# ==========================================================
+
+# ── GENERAL ──
+# Manufacturer : INFINIX
+# Model        : Infinix X6886
+# Brand        : Infinix
+# Platform     : mt6789
+# Android      : 16 - API 36
+# Kernel       : 6.12.38-android16-5-gb575a0b6e647-ab14355190-4k #1 SMP
+# LCM          : nt37706a_fhdp_dsi_vdo_dsc_boe_boe_144hz_x6886
+# Accelerometer: lsm6dso_acc
+# Als/ps       : mn79911_als / mn79911_ps
+# Magnetometer : qmc6308
+# Gyroscope    : lsm6dso_gyro
+# Camera       : imx882_mipiraw / gc13a0ff_mipiraw
+# Lens AF      : MAINAF (i2c 2-000c)
+# Charger      : sc8548-charger (i2c 7-006f) / sc8950 (i2c 5-006b)
+# NFC          : tms,nfc (i2c 0-0028)
+# Audio        : aw87xxx_pa (i2c 6-0058) / aw87xxx_pa (i2c 6-0059)
+# Fingerprint  : goodix_fp / tran_keys
+# Other        : flashlights-tran (i2c 6-0063)
+#              : gate_ic_i2c_rt4831 (i2c 6-0011)
+#              : hl1280-driver (i2c 3-0042)
+#              : kd_camera_hw (i2c 2-002a)
+#              : kd_camera_hw_bus2 (i2c 4-001a)
+#              : mediatek,camera_eeprom (i2c 2-0050)
+#              : mediatek,camera_eeprom (i2c 4-0051)
+#              : tfcp_ta (i2c 7-001b)
+#              : tran_ldo (i2c 3-0028)
+#              : upm7610 (i2c 3-0060)
+# Wi-Fi        : CONSYS_MT6789 - Wi-Fi 5
+# Sound        : mt6789mt6366
+# RAM          : 8GB LPDDR4X
+# UFS          : C2G074 - UFS 2.2
+
+# ── SOC ──
+# SoC          : Helio G200 - MT6789V/T - MediaTek
+# Cores        : 8 (2x Cortex-A76 @2.20 + 6x Cortex-A55 @2.00)
+# Arch         : 64-bit aarch64 arm64-v8a
+# Process      : 6nm TSMC N6 - Revision r4p0/r2p0 - Governor sugov_ext
+# GPU          : Mali-G57 MC2 - 390-1100 MHz - Vulkan 1.3 - OpenGL ES 3.2
+
+# ── SYSTEM ──
+# Model Name   : Infinix HOT 60 Pro+
+# Codename     : Baklava
+# Device       : Infinix-X6886
+# Product      : X6886-OP
+# Board        : Infinix-X6886
+# Build        : BP2A.250605.031.A3 - release-keys
+# Fingerprint  : Infinix/X6886-OP/Infinix-X6886:16/BP2A.250605.031.A3/301400011:user/release-keys
+
+# ── SCREEN ──
+# Resolution : 2400x1080 20:9 6.78" 71x157mm 420dpi 388 PPI
+# Refresh    : 90/120/144/60 Hz - Wide color gamut yes
+
+# ── CAMERA ──
+# Back  : 50MP Sony imx882_mipiraw - Supported: gc50b2l/gc50f6/ov50d40/ov50mtele/imx882/imx896/gc32e1*/hi3231q/gc13a0ff/gc08a3*/gc02m3macro
+# Front : 13MP GalaxyCore gc13a0ff_mipiraw
+# API   : Camera2 full
+
+# ── BATTERY ──
+# Profile : 5160mAh Li-ion
+
+# ── INPUT ──
+# mtk-kpd / mtk-pmic-keys / tran_keys / mt6789-mt6366 Headset Jack / mtk-tpd 2401x1081
+
+# ── FEATURES ──
+# audio.low_latency / bluetooth / camera / fingerprint / nfc / gps / vulkan / wifi / telephony / touchscreen / sensors (acc/compass/gyro/light/proximity)
