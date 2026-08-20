@@ -1,106 +1,49 @@
-# TWRP for Infinix HOT 60 Pro Plus (X6886)
+# OrangeFox / TWRP for Infinix HOT 60 Pro+ (X6886)
 
-<img src="https://img.shields.io/badge/Android-16-3DDC84?style=for-the-badge&logo=android" />
-<img src="https://img.shields.io/badge/Kernel-6.12.38-1B82E2?style=for-the-badge" />
-<img src="https://img.shields.io/badge/SoC-MediaTek%20Helio%20G200-64B5F6?style=for-the-badge" />
-<img src="https://img.shields.io/badge/TWRP-14.1-orange?style=for-the-badge" />
+![Android 16](https://img.shields.io/badge/Android-16-3DDC84?style=for-the-badge&logo=android)
+![Kernel 6.12](https://img.shields.io/badge/Kernel-6.12.38-1B82E2?style=for-the-badge)
+![SoC Helio G200](https://img.shields.io/badge/SoC-Helio%20G200-6425F6?style=for-the-badge)
+![Fox 14.1](https://img.shields.io/badge/Fox-14.1-orange?style=for-the-badge)
 
-**TWRP 14.1** device tree for the **Infinix HOT 60 Pro Plus (X6886)** — MT6789 (Helio G200), Android 16, GKI, recovery in `vendor_boot`.
+Recovery tree for **Infinix HOT 60 Pro+** — `mt6789` • `Baklava` • `Android 16` • `vendor_boot v4`
+
+> Maintainer: **B E R U** | Tested on `BP2A.250605.031.A3`
 
 ---
 
-## Device Specifications
+### Device Specs
 
 | Spec | Value |
-|------|-------|
-| SoC | MediaTek Helio G200 (MT6789) |
-| Display | 6.8" AMOLED, 1080x2400, 144Hz |
-| RAM / Storage | 8GB / 256GB UFS |
-| Android | 16 (BP2A.250605.031.A3) |
-| Kernel | 6.12.38-android16 (GKI 4K) |
-| Boot | Vendor Boot (v4) / Virtual A/B |
-| Encryption | FBE, Metadata, fscrypt v2, KeyMint v3 |
+| :--- | :--- |
+| **SoC** | MediaTek Helio G200 (MT6789) - 6nm N6, 2x A76 @2.20 + 6x A55 @2.00 |
+| **GPU** | Mali-G57 MC2 @1100MHz |
+| **RAM / Storage** | 8GB LPDDR4X / 256GB UFS 2.2 |
+| **Display** | 6.78" AMOLED 2400x1080 144Hz, nt37706a_fhdp_dsc_boe, 388 PPI |
+| **Kernel** | 6.12.38-android16-5 GKI 4K |
+| **Android** | 16 - API 36 - BP2A.250605.031.A3 |
+| **Boot** | vendor_boot header v4 (64MB limit) - Virtual A/B |
+| **Partitions** | Super 9GB (erofs), Dynamic, No recovery partition |
+| **Crypto** | FBE + Metadata + fscrypt v2, KeyMint 7.0 Trustonic |
+| **Board** | Infinix-X6886 / X6886-OP |
 
 ---
 
-## Features
+### Features
 
-- ✅ FBE / Metadata Decryption (`TW_INCLUDE_FBE_METADATA_DECRYPT`)
-- ✅ KeyMint v3 (Trustonic) — keys work, **Format Data works**
-- ✅ Vendor boot module loading (`TW_LOAD_VENDOR_BOOT_MODULES`)
-- ✅ Fastbootd included
-- ✅ Full MTK bootctrl (Virtual A/B slots)
-- ✅ External SD + USB OTG
-- ✅ 1080x2400 @144Hz recovery UI (BGRA_8888)
+- ✅ Boot - vendor_boot v4 boots correctly
+- ✅ Decryption - FBE + Metadata, `Format Data` works
+- ✅ Display - 1080x2400 144Hz, BGRA_8888, brightness control
+- ✅ Touch - mtk-tpd, 2400x1080
+- ✅ Storage - /data (f2fs), SDCard, USB OTG, MTP/ADB
+- ✅ Fastbootd - `TW_INCLUDE_FASTBOOTD` keep
+- ✅ Flashlight - `/sys/devices/virtual/flashlight_core/...`
+- ✅ Vibration - AIDL Haptics
+- ✅ 64MB Fix - LZMA + DRASTIC (92MB -> 60MB)
 
----
+### Build
 
-## Build
-
+#### 1. Sync Fox 14.1
 ```bash
-repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-14.1
-repo sync
-
-# clone this tree to:
-#   device/infinix/X6886
-
-export LC_ALL=C
-export ALLOW_MISSING_DEPENDENCIES=true
-source build/envsetup.sh
-lunch twrp_X6886-ap2a-eng
-mka vendorbootimage
-```
-
-Output:
-
-```
-out/target/product/X6886/vendor_boot.img
-```
-
----
-
-> **Note:** The minimal TWRP manifest does not generate the `-ndk_platform`
-> variant of the AIDL NDK libs. Apply the official fix before the first build
-> (run from the AOSP tree root):
->
-> ```bash
-> bash device/infinix/X6886/scripts/fix-ndk-platform.sh
-> ```
->
-> This renames `android.security.apc-ndk_platform` etc. to the plain `-ndk`
-> names in `bootable/recovery/{libtar,Android}.mk`.
-
----
-
-## Flash
-
-```bash
-# reboot to fastboot, then:
-fastboot flash vendor_boot out/target/product/X6886/vendor_boot.img
-fastboot reboot recovery
-```
-
-> **Keep stock `dtbo.img`** — the panel dtb is device-specific.
-
----
-
-## Kernel Modules
-
-Kernel modules come straight from the **stock A16 dump** (`lib/modules`), loaded via `modules.load.recovery`. Display chain includes:
-
-- `mediatek_drm_v1.ko` + `mtk_panel_ext.ko` + `tran_drm_panel_i2c.ko`
-- Panel: `nt37706a_fhdp_dsi_vdo_dsc_boe_boe_144hz_x6886.ko`
-
----
-
-## Credits
-
-- **TWRP Team** for the recovery
-- **MTK / Transsion** community trees as reference
-- Stock A16 firmware dump for blobs & modules
-
----
-
-## Disclaimer
-
-Recovery flashing carries risk. Use at your own pace, keep backups.
+mkdir -p ~/fox_14.1 && cd ~/fox_14.1
+git clone https://gitlab.com/OrangeFox/sync.git
+cd sync && ./orangefox_sync.sh --branch 14.1 --path ~/fox_14.1
