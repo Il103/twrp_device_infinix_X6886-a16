@@ -1,27 +1,58 @@
-# ADB
+# ==========================================
+# System Properties - Infinix X6886 - mt6789
+# Android 16 - Fox 14.1 - PATCHED
+# ==========================================
+
+# ── ADB ──
 ro.adb.secure=0
+ro.secure=0
+ro.debuggable=1
+persist.sys.usb.config=mtp,adb
+persist.service.adb.enable=1
+persist.service.debuggable=1
+service.adb.root=1
 
-# Dynamic Partitions
-ro.boot.dynamic_partitions=true
-
-# USB MTP
+# ── USB / MTP ──
 ro.sys.usb.storage.type=mtp
+ro.sys.usb.mtp.whql.enable=0
+sys.usb.config=mtp,adb
+sys.usb.controller=11201000.usb0
+persist.adb.notify=0
 
-# Crypto
-ro.crypto.volume.filenames_mode=aes-256-cts
+# ── Dynamic Partitions / Virtual A/B ──
+ro.boot.dynamic_partitions=true
+ro.boot.dynamic_partitions_retrofit=false
+
+# ── Crypto / FBE - MUST MATCH DUMP ──
 ro.crypto.type=file
+ro.crypto.volume.filenames_mode=aes-256-cts
+ro.crypto.dm_default_key.options_format.version=2
+ro.crypto.volume.metadata.method=dm-default-key
+ro.crypto.volume.options=::v2
+ro.crypto.volume.metadata.encryption=aes-256-xts
 
-# Platform (verified from A16 dump)
+# ── Platform - Verified from A16 dump ──
 ro.vendor.mediatek.platform=MT6789
+ro.mediatek.platform=MT6789
+ro.hardware=mt6789
 ro.sf.lcd_density=420
+ro.minui.pixel_format=BGRA_8888
 
-# Storage
+# ── Storage - A16 External Storage ──
 external_storage.projid.enabled=1
 external_storage.casefold.enabled=1
 external_storage.sdcardfs.enabled=0
 
-# API
+# ── API Level - Android 16 ──
 ro.vendor.api_level=36
+ro.build.version.sdk=36
+ro.product.first_api_level=34
 
-# Pixel format (stock prop.default)
-ro.minui.pixel_format=BGRA_8888
+# ── Recovery Specific ──
+ro.twrp.vendor_boot=true
+ro.twrp.version=14.1_Fox
+ro.recovery.support_touch=true
+
+# ── Performance / Stability ──
+persist.sys.fuse.passthrough.enable=true
+ro.lmk.kill_heaviest_task=true
