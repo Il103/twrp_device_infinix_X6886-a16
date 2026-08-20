@@ -1,4 +1,4 @@
-//// Copyright (C) 2018 The Android Open Source Project
+// Copyright (C) 2018 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,7 +50,6 @@ cc_library_shared {
 }
 
 // ── Recovery HAL - for vendor_boot ramdisk ──
-// device.mk:73 -> android.hardware.boot@1.2-mtkimpl.recovery
 cc_library_shared {
     name: "android.hardware.boot@1.2-mtkimpl.recovery",
     stem: "android.hardware.boot@1.0-impl-1.2-mtkimpl",
