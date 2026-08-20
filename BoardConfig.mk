@@ -77,9 +77,10 @@ BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwr
 ALLOW_MISSING_DEPENDENCIES := true
 
 # ==========================================
-# Vendor Boot (Header v4)
+# Vendor Boot (Header v4) - PATCHED FOR 64MB
 # ==========================================
-BOARD_RAMDISK_USE_LZ4 := true
+BOARD_RAMDISK_USE_LZMA := true
+BOARD_RAMDISK_USE_LZ4 := false
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
 BOARD_KERNEL_BASE := 0x3FFF8000
@@ -195,7 +196,7 @@ TW_BACKUP_EXCLUSIONS := /data/fonts
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 
-# TWRP Features & Tools
+# TWRP Features & Tools - KEEP FASTBOOTD AS REQUESTED
 TW_INCLUDE_FASTBOOTD := true
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
@@ -246,7 +247,7 @@ ifeq ($(OFOX_BUILD), true)
     FOX_ADVANCED_SECURITY := true
     FOX_R_PROPS_MODULE := true
     
-    # OrangeFox Tools & Features
+    # OrangeFox Tools & Features - KEEP ALL
     FOX_ENABLE_APP_MANAGER := true
     FOX_USE_BASH_SHELL := true
     FOX_ASH_IS_BASH := true
@@ -267,9 +268,11 @@ ifeq ($(OFOX_BUILD), true)
     OF_FL_PATH1 := /sys/devices/virtual/flashlight_core/flashlight/flashlight_torch
 
     # ---- Boot-critical flags for fox_14.1 (prebuilt kernel + VAB) ----
-    # Avoid "NO KERNEL CONFIG" build error when using a prebuilt kernel
     OF_FORCE_PREBUILT_KERNEL := 1
-    # Modern devices use AIDL boot control HAL
     OF_USE_AIDL_BOOT_CONTROL := 1
+
+    # ---- PATCH FOR 64MB LIMIT - MUST BE LAST ----
+    OF_USE_LZMA_COMPRESSION := 1
+    FOX_DRASTIC_SIZE_REDUCTION := 1
 
 endif
