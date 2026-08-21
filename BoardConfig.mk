@@ -84,11 +84,12 @@ BUILD_BROKEN_NINJA_USES_ENV_VARS += RTIC_MPGEN
 BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
 
 # ==========================================
-# Vendor Boot (Header v4) - PATCHED FOR 64MB
+# Vendor Boot (Header v4) - PATCHED FOR 64MB + RECOVERY_RAMDISK
 # ==========================================
 BOARD_RAMDISK_USE_LZMA := true
 BOARD_RAMDISK_USE_LZ4 := false
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
 BOARD_KERNEL_BASE := 0x3FFF8000
 BOARD_PAGE_SIZE := 4096
@@ -247,8 +248,6 @@ ifeq ($(OFOX_BUILD), true)
     OF_FL_PATH1 := /sys/devices/virtual/flashlight_core/flashlight/flashlight_torch
     OF_FORCE_PREBUILT_KERNEL := 1
     OF_USE_AIDL_BOOT_CONTROL := 1
-    OF_PATCH_AVB20 := 1
-    OF_KEEP_DM_VERITY := 1
     OF_USE_MAGISKBOOT := 1
     OF_DONT_PATCH_ENCRYPTED_DEVICE := 1
     OF_USE_LZMA_COMPRESSION := 1
