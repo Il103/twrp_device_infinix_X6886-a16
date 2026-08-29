@@ -1,6 +1,5 @@
 # ofox_X6886.mk - OrangeFox product makefile for Infinix Hot 60 Pro Plus
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
-$(call inherit-product, $(LOCAL_PATH)/minimal.mk)
 
 # OrangeFox common config
 $(call inherit-product, vendor/ofox/config/common.mk)

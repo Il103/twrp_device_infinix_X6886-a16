@@ -45,8 +45,6 @@ PRODUCT_PACKAGES += \
 # The recovery needs the keymaster@4.1 lib relinked into the ramdisk
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.1
-TARGET_RECOVERY_DEVICE_MODULES += \
-    android.hardware.keymaster@4.1
 
 # --- Gatekeeper (Trustonic) ---
 PRODUCT_PACKAGES += \
@@ -65,11 +63,7 @@ PRODUCT_PACKAGES += \
 
 # --- Device-specific modules (built from this tree) ---
 PRODUCT_PACKAGES += \
-    libinit_X6886 \
-    android.hardware.boot@1.2-mtkimpl \
-    android.hardware.boot@1.2-mtkimpl.recovery \
-    mtk_plpath_utils \
-    mtk_plpath_utils.recovery
+    libinit_X6886
 
 # --- formatdata.sh (full /data + /metadata wipe on UI request) ---
 PRODUCT_COPY_FILES += \
@@ -100,8 +94,7 @@ PRODUCT_COPY_FILES += \
 # --- ueventd / first stage fstab ---
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/ueventd.mt6789.rc:recovery/root/ueventd.mt6789.rc \
-    $(LOCAL_PATH)/recovery/root/system/etc/ueventd.rc:system/etc/ueventd.rc \
-    $(LOCAL_PATH)/recovery/root/first_stage_ramdisk/fstab.mt6789:recovery/root/first_stage_ramdisk/fstab.mt6789
+    $(LOCAL_PATH)/recovery/root/system/etc/ueventd.rc:system/etc/ueventd.rc
 
 # --- init rc files (modules + format wiring) ---
 PRODUCT_COPY_FILES += \
