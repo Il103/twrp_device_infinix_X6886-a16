@@ -1,0 +1,4 @@
+# additional.fstab for TWRP FBE decryption
+# This tells TWRP how to mount metadata and decrypt /data
+/dev/block/by-name/metadata   /metadata   f2fs   noatime,nosuid,nodev,discard   wait,check
+/dev/block/by-name/userdata   /data       f2fs   noatime,nosuid,nodev,discard   wait,check,resize,quota,fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption

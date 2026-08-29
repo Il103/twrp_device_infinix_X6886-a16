@@ -1,0 +1,72 @@
+# init.recovery.mt6789.rc - Infinix Hot 60 Pro Plus (x6886)
+# USB controller is musb-hdrc (from stock init.recovery.mt6789.rc).
+# Trustonic TEE gatekeeper/keymint services started on encrypted boot
+# (required for FBE /data decryption on this device).
+
+import /init.tee.rc
+import /init.device.rc
+import /init.modules.rc
+import /init.format.rc
+
+on init
+    setenforce 0
+    setprop sys.usb.configfs 1
+    setprop sys.usb.controller "musb-hdrc"
+    setprop sys.usb.ffs.aio_compat 0
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    setprop crypto.ready 1
+    start boot-hal-1-2
+
+on fs
+    wait /dev/block/platform/soc/11270000.ufshci
+    symlink /dev/block/platform/soc/11270000.ufshci /dev/block/bootdevice
+    install_keyring
+
+on boot
+    setprop sys.usb.config adb
+
+on post-fs-data
+    start health-hal-2-1
+
+on boot
+    start mtk.plpath.utils.link
+
+# MTK preloader / bootloader symlinks
+on property:persist.vendor.mtk.pl_lnk=1
+    symlink /dev/block/mapper/pl_a /dev/block/by-name/preloader_raw_a
+    symlink /dev/block/mapper/pl_b /dev/block/by-name/preloader_raw_b
+    symlink /dev/block/mapper/pl_a /dev/block/platform/bootdevice/by-name/preloader_raw_a
+    symlink /dev/block/mapper/pl_b /dev/block/platform/bootdevice/by-name/preloader_raw_b
+    symlink /dev/block/by-name/lk1 /dev/block/by-name/bootloader1
+    symlink /dev/block/by-name/lk2 /dev/block/by-name/bootloader2
+
+service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
+    class main
+    user root
+    group root system
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
+service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service vendor.keymint-trustonic /vendor/bin/hw/android.hardware.security.keymint-service.trustonic
+    class early_hal
+    interface android.hardware.keymaster@4.0::IKeymasterDevice default
+    interface android.hardware.keymaster@4.1::IKeymasterDevice default
+    user nobody
+    seclabel u:r:recovery:s0
+
+# On encrypted boot, bring up TEE crypto services for /data decryption
+on property:ro.crypto.state=encrypted && property:ro.boot.dynamic_partitions=true
+    start mobicore
+    start vendor.gatekeeper-1-0
+    start vendor.keymint-trustonic
+
+on property:servicemanager.ready=true
+    setprop sys.boot_completed 1

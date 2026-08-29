@@ -1,0 +1,6 @@
+# init.custom.rc - Infinix Hot 60 Pro Plus (x6886)
+# Manual mount of /persist for Trustonic TEE (mobicore) storage.
+
+on boot
+    mkdir /mnt/vendor/persist
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist rw
