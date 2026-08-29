@@ -125,4 +125,4 @@ fastboot flash vendor_boot out/target/product/x6886/vendor_boot.img
 
 ## Maintained by
 
-Spider Team — Youssef (Jo / Beru)
+Spider Team — B E R U 
