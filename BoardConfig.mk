@@ -127,7 +127,7 @@ TARGET_BOARD_PLATFORM := mt6789
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # Device Fstab
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/first_stage_ramdiks/fstab.mt6789
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/first_stage_ramdisk/fstab.mt6789
 
 # Resolution
 TARGET_SCREEN_HEIGHT := 2400
