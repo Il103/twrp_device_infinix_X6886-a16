@@ -20,8 +20,11 @@ ENABLE_VIRTUAL_AB := true
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
-PRODUCT_SHIPPING_API_LEVEL := 34
-PRODUCT_TARGET_VNDK_VERSION := 34
+PRODUCT_SHIPPING_API_LEVEL := 32
+PRODUCT_TARGET_VNDK_VERSION := 32
+
+# System properties (includes system.prop)
+TARGET_SYSTEM_PROP += $(LOCAL_PATH)/system.prop
 
 PRODUCT_PROPERTY_OVERRIDES += ro.twrp.vendor_boot=true
 
@@ -70,7 +73,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libinit_X6886
 
-# --- formatdata.sh (script only - trigger is now inside init.recovery.mt6789.rc) ---
+# --- formatdata.sh (script only - trigger is inside init.recovery.mt6789.rc) ---
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/system/bin/formatdata.sh:recovery/root/system/bin/formatdata.sh
 
