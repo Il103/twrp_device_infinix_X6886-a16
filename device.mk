@@ -70,7 +70,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libinit_X6886
 
-# --- formatdata.sh (script only - trigger will be in init.recovery.mt6789.rc) ---
+# --- formatdata.sh (script only - trigger is now inside init.recovery.mt6789.rc) ---
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/system/bin/formatdata.sh:recovery/root/system/bin/formatdata.sh
 
@@ -101,13 +101,15 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/ueventd.mt6789.rc:recovery/root/ueventd.mt6789.rc \
     $(LOCAL_PATH)/recovery/root/system/etc/ueventd.rc:system/etc/ueventd.rc
 
-# --- init rc files (modules + recovery main) ---
-# Note: init.format.rc removed (non-standard). Trigger for formatdata.sh will be added directly in init.recovery.mt6789.rc
+# --- init rc files ---
+# Note: init.format.rc removed (non-standard)
+# Note: init.device.rc removed (does not exist)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/init.modules.rc:recovery/root/init.modules.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.mt6789.rc:recovery/root/init.recovery.mt6789.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.usb.rc:recovery/root/init.recovery.usb.rc \
-    $(LOCAL_PATH)/recovery/root/init.tee.rc:recovery/root/init.tee.rc
+    $(LOCAL_PATH)/recovery/root/init.tee.rc:recovery/root/init.tee.rc \
+    $(LOCAL_PATH)/recovery/root/init.custom.rc:recovery/root/init.custom.rc
 
 # --- Blob copy rules ---
 -include $(LOCAL_PATH)/proprietary-files.mk
