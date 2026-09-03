@@ -44,3 +44,6 @@ export FOX_USE_TWRP_SUPER_RAMDISK=1
 
 # Android 16 FBE handling
 export OF_SKIP_FBE_DECRYPTION_SDKVERSION=36
+
+# Maintainer
+export OF_MAINTAINER="B E R U"
